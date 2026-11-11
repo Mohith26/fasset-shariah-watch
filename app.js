@@ -13,7 +13,7 @@ const fmtDate = s => new Date(s + 'T00:00:00Z').toLocaleDateString('en-GB', { da
 const cls = p => p >= R.losses.alertThreshold * 2 ? 'hi' : p >= R.losses.alertThreshold ? 'mid' : 'lo';
 const SMALL = new Set(['and', 'of', 'the', '&']);
 function prettyName(n) {
-  let s = n.replace(/[,.]? (Inc|Corp|Corporation|Company|Co|Ltd|plc|N\.V|Holdings|Incorporated)\.?$/i, '').replace(/[,.]? (Inc|Corp|Co)\.?$/i, '');
+  let s = n.replace(/[,.]? (Inc|Corp|Corporation|Ltd|plc|N\.V|Incorporated)\.?$/i, '').replace(/[,.]? (Inc|Corp)\.?$/i, '');
   if (s === s.toUpperCase()) s = s.toLowerCase().split(' ').map((w, i) => i && SMALL.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   return s;
 }
