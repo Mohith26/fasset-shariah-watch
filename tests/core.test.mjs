@@ -135,3 +135,16 @@ test('current watchlist: at-risk list equals compliant holdings at or above the 
   assert.deepEqual(list, [...R.current.atRiskTickers].sort());
   assert.equal(R.losses.thresholdChosenOn, 'calibration years (max F1)');
 });
+
+test('property: Poisson-binomial sums to 1, matches the mean, and equals the binomial when all p are equal', () => {
+  const rng = W.mulberry32(31);
+  for (let it = 0; it < 50; it++) {
+    const ps = Array.from({ length: 1 + Math.floor(rng() * 30) }, () => rng() * 0.5);
+    const d = W.poissonBinomial(ps);
+    assert.ok(Math.abs(d.reduce((a, b) => a + b, 0) - 1) < 1e-12);
+    assert.ok(Math.abs(d.reduce((a, v, k) => a + k * v, 0) - ps.reduce((a, b) => a + b, 0)) < 1e-9);
+  }
+  const d = W.poissonBinomial([0.2, 0.2, 0.2]);
+  assert.ok(Math.abs(d[1] - 3 * 0.2 * 0.8 * 0.8) < 1e-12);
+  assert.equal(W.pbSummary([0, 0, 0]).hi, 0);
+});

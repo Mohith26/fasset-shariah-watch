@@ -220,3 +220,23 @@ export function reliability(p, y, edges = [0, 0.02, 0.05, 0.1, 0.2, 0.4, 0.7, 1.
   p.forEach((v, i) => { const b = bins.find(b => v >= b.lo && v < b.hi); b.n++; b.sumP += v; b.sumY += y[i]; });
   return bins.map(b => ({ lo: b.lo, hi: Math.min(1, b.hi), n: b.n, meanP: b.n ? b.sumP / b.n : null, rate: b.n ? b.sumY / b.n : null }));
 }
+
+// ---------- strategy view: how many names leave at the review ----------
+// Poisson-binomial distribution of the number of failures among independent
+// holdings with probabilities ps (exact O(n^2) DP).
+export function poissonBinomial(ps) {
+  let dist = [1];
+  for (const p of ps) {
+    const next = new Array(dist.length + 1).fill(0);
+    for (let k = 0; k < dist.length; k++) { next[k] += dist[k] * (1 - p); next[k + 1] += dist[k] * p; }
+    dist = next;
+  }
+  return dist;
+}
+export function pbSummary(ps, level = 0.9) {
+  const d = poissonBinomial(ps);
+  const mean = ps.reduce((a, b) => a + b, 0);
+  let c = 0, hi = d.length - 1;
+  for (let k = 0; k < d.length; k++) { c += d[k]; if (c >= level) { hi = k; break; } }
+  return { mean, hi, p0: d[0], dist: d };
+}

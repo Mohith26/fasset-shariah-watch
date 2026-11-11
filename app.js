@@ -40,12 +40,13 @@ function filtered() {
 
 function renderHero() {
   const comp = U.filter(u => u.compliant), risk = comp.filter(atRisk);
+  const pb = W.pbSummary(comp.map(u => u.p));   // strategy view: how many compliant names drop out
   $('#hero').innerHTML = `
     <div class="lbl">Next quarterly review · ${fmtDate(R.nextReview)} <i class="ph-fill ph-info"></i></div>
     <div class="big">${risk.length}<small> of ${comp.length} at risk</small></div>
     <div class="sub"><span><i class="ph ph-shield-check"></i> ${comp.length} compliant today</span><span class="dim">· data as of ${fmtDate(R.asOf)}</span></div>
     <div class="row">
-      <div class="tile"><span>Alert line</span><b>${riskPct(R.losses.alertThreshold)} chance</b><em>set on 2013-20 data</em></div>
+      <div class="tile"><span>Expected exits at review</span><b>${pb.mean.toFixed(1)} names</b><em>90%: at most ${pb.hi} · alert line ${riskPct(R.losses.alertThreshold)}</em></div>
       <div class="tile"><span>Back-tested recall</span><b>${R.losses.caught} of ${R.losses.losses}</b><em>losses flagged early</em></div>
     </div>`;
 }
