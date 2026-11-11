@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fasset · Shariah Watch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<link rel="stylesheet" href="style.css">
+<script>window.__errs=[];addEventListener("error",e=>__errs.push(String(e.message)));addEventListener("unhandledrejection",e=>__errs.push(String(e.reason)));</script>
+</head>
+<body>
+<div class="stage">
+  <section class="caption">
+    <div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span><b>FASSET</b><sup>®</sup></div>
+    <h1>Know before<br>the next review.</h1>
+    <p>Shariah Watch forecasts which of your compliant holdings could fail the debt or cash screen at the next quarterly review, with calibrated odds.</p>
+    <div class="cap-stats" id="capStats"></div>
+    <button class="ghost" id="btnHow"><i class="ph ph-info"></i>How the odds are calibrated</button>
+    <p class="fine">Unofficial concept demo by Mohith Gajjela. Not affiliated with Fasset. Public data: SEC XBRL filings and daily prices; AAOIFI 30% financial screens only. Not investment or Shariah advice. <a href="https://github.com/Mohith26/fasset-shariah-watch">Source</a> · <kbd>?</kbd> keys</p>
+  </section>
+
+  <div class="phone" aria-label="Shariah Watch list">
+    <div class="screen" id="listScreen">
+      <div class="statusbar"><b>9:41</b><span class="island"></span><span class="sb-icons"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+      <header class="nav"><i class="ph ph-caret-left" aria-hidden="true"></i><h2>Shariah Watch</h2><button class="icon" id="btnSearch" aria-label="Search"><i class="ph ph-magnifying-glass"></i></button></header>
+      <div class="search hidden" id="searchBox"><i class="ph ph-magnifying-glass"></i><input id="q" placeholder="Search stocks" aria-label="Search stocks" autocomplete="off"></div>
+      <div class="scroll" id="listScroll">
+        <div class="hero" id="hero"></div>
+        <div class="chips" role="tablist" aria-label="Filter">
+          <button role="tab" data-f="risk">At risk</button><button role="tab" data-f="ok">Compliant</button><button role="tab" data-f="no">Not compliant</button><button role="tab" data-f="all">All</button>
+        </div>
+        <div id="list" role="listbox" aria-label="Holdings"></div>
+        <div class="list-foot"><button class="pill-btn" id="btnCsv"><i class="ph ph-download-simple"></i>Export CSV</button><span id="countNote"></span></div>
+      </div>
+      <nav class="tabbar" aria-label="App tabs"><span><i class="ph ph-house"></i>Home</span><span class="on"><i class="ph-fill ph-chart-pie-slice"></i>Invest</span><span><i class="ph ph-arrows-left-right"></i>Pay</span><span><i class="ph ph-credit-card"></i>Card</span><span><i class="ph ph-user"></i>Profile</span></nav>
+    </div>
+  </div>
+
+  <div class="phone" aria-label="Holding detail">
+    <div class="screen" id="detailScreen">
+      <div class="statusbar"><b>9:41</b><span class="island"></span><span class="sb-icons"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+      <header class="nav"><i class="ph ph-caret-left" aria-hidden="true"></i><h2 id="dTitle">-</h2><button class="icon" id="btnBell" aria-label="Notify me about this stock"><i class="ph ph-bell"></i></button></header>
+      <div class="scroll" id="detail"></div>
+    </div>
+  </div>
+</div>
+<div id="loading" class="overlay"><div class="spinner"></div><p>Loading filings</p></div>
+<div id="error" class="overlay hidden" role="alert"><i class="ph ph-warning-circle"></i><p id="errorText">Could not load data.</p><button class="cta" onclick="location.reload()">Retry</button></div>
+<div id="sheet" class="sheet-wrap hidden" role="dialog" aria-modal="true" aria-label="Details"></div>
+<div id="toast" class="toast hidden" role="status"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
